@@ -6,6 +6,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var imagemin = require('gulp-imagemin');
 var htmlmin = require('gulp-htmlmin');
+var plumber = require('gulp-plumber');
 var reload = browserSync.reload;
 
 
@@ -21,6 +22,7 @@ var less = require('gulp-less');
 //less 编译
 gulp.task('less', function () {
   return gulp.src('./src/style/*.less')
+    .pipe(plumber())
     .pipe(less())
     .pipe(gulp.dest('./dist/css'))
     .pipe(csso())
