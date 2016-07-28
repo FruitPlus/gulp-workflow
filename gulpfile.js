@@ -12,7 +12,9 @@ var streamify = require('gulp-streamify')
 var source = require('vinyl-source-stream');
 var sourcemaps = require("gulp-sourcemaps");
 var buffer = require('vinyl-buffer');
+var gutil = require('gulp-util')
 var reload = browserSync.reload;
+var smile = gutil.colors.bgBlue(' ^_^ ')
 
 
 gulp.task('default', function() {
@@ -26,6 +28,7 @@ var less = require('gulp-less');
 
 //less 编译
 gulp.task('less', function () {
+  gutil.log(smile + ' -> ' +'less')
   return gulp.src('./src/style/*.less')
     .pipe(plumber())
     .pipe(less())
@@ -40,7 +43,8 @@ gulp.task('less', function () {
 
 //JS合并 压缩混淆
 gulp.task('script',function(){
-	gulp.src('./src/js/*.js')
+  gutil.log(smile + ' -> ' +'script')
+	return gulp.src('./src/js/*.js')
 		.pipe(concat('all.js'))
 		.pipe(gulp.dest('./dist/js'))
 		.pipe(uglify())
@@ -52,7 +56,8 @@ gulp.task('script',function(){
 
 //图片压缩复制
 gulp.task('imagemin',function(){
-	gulp.src('./src/images/*')
+  gutil.log(smile + ' -> ' +'imagemin')
+	return gulp.src('./src/images/*')
 		.pipe(imagemin())
 		.pipe(gulp.dest('dist/images'))
 })
@@ -60,7 +65,8 @@ gulp.task('imagemin',function(){
 
 //HTML
 gulp.task('html', function() {
-  gulp.src('src/*.html')
+  gutil.log(smile + ' -> ' +'html')
+  return gulp.src('src/*.html')
     .pipe(htmlmin({
       collapseWhitespace: true,
       removeComments: true
@@ -70,7 +76,8 @@ gulp.task('html', function() {
 
 
 //打包JS
-gulp.task('bundle', function() {  
+gulp.task('bundle', function() { 
+gutil.log(smile + ' -> ' +'bundle') 
   return browserify({
     entries: "./src/js/main.js",
     debug: true //debug: true是告知Browserify在运行同时 生成 内联sourcemap 用于调试。
