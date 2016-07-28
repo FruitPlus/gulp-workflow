@@ -12,10 +12,10 @@ var streamify = require('gulp-streamify')
 var source = require('vinyl-source-stream');
 var sourcemaps = require("gulp-sourcemaps");
 var buffer = require('vinyl-buffer');
-var gutil = require('gulp-util')
+var gutil = require('gulp-util');
 var reload = browserSync.reload;
-var smile = gutil.colors.bgBlue(' ^_^ ')
-
+var smile = gutil.colors.bgBlue(' ^_^ ');
+var autoprefixer = require('gulp-autoprefixer')
 
 gulp.task('default', function() {
   // 将你的默认的任务代码放在这
@@ -31,6 +31,13 @@ gulp.task('less', function () {
   gutil.log(smile + ' -> ' +'less')
   return gulp.src('./src/style/*.less')
     .pipe(plumber())
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions', 'Android >= 4.0'],
+        cascade: true, //是否美化属性值 默认：true 像这样：
+        //-webkit-transform: rotate(45deg);
+        //        transform: rotate(45deg);
+        remove:true //是否去掉不必要的前缀 默认：true 
+    }))
     .pipe(less())
     .pipe(gulp.dest('./dist/css'))
     .pipe(csso())
